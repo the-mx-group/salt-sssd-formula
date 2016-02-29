@@ -1,0 +1,21 @@
+
+{% set sssd = {
+    'lookup': salt['grains.filter_by']({
+        'Debian': {
+            'package': 'sssd',
+            'service': 'sssd',
+            'sssd_conf': '/etc/sssd/sssd.conf'
+        },
+        'RedHat': {
+            'package': 'sssd',
+            'service': 'sssd',
+            'sssd_conf': '/etc/sssd/sssd.conf'
+        },
+    }, merge=salt['pillar.get']('sssd:lookup')),
+    'settings': salt['pillar.get']('sssd:settings', {
+        'sssd': False,
+        'sssd_conf': {
+        }
+    })
+} %}
+
