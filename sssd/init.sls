@@ -3,6 +3,9 @@
 {% from "sssd/map.jinja" import sssd with context %}
 {% set service = {True: 'running', False: 'dead'} %}
 
+include:
+  - sssd.authconfig
+
 sssd:
   pkg.installed:
     - name: {{ sssd.lookup.package }}
@@ -19,6 +22,8 @@ sssd_conf:
       - service: sssd_service
     - require:
       - pkg: sssd
+    - require_in:
+      - cmd: authconfig_apply
 
 {% if 'sssd' in sssd.settings %}
 sssd_service:
