@@ -3,8 +3,10 @@
 {% from "sssd/map.jinja" import sssd with context %}
 {% set service = {True: 'running', False: 'dead'} %}
 
+{% if grains['os_family'] == 'RedHat' %}
 include:
   - sssd.authconfig
+{% endif %}
 
 sssd:
   pkg.installed:
@@ -22,8 +24,10 @@ sssd_conf:
       - service: sssd_service
     - require:
       - pkg: sssd
+{% if grains['os_family'] == 'RedHat' %}
     - require_in:
       - cmd: authconfig_apply
+{% endif %}
 
 {% if 'sssd' in sssd.settings %}
 sssd_service:
