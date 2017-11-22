@@ -11,6 +11,11 @@
             'service': 'sssd',
             'sssd_conf': '/etc/sssd/sssd.conf'
         },
+        'Arch': {
+            'package': 'sssd',
+            'service': 'sssd',
+            'sssd_conf': '/etc/sssd/sssd.conf'
+        },
     }, merge=salt['pillar.get']('sssd:lookup')),
     'settings': salt['pillar.get']('sssd:settings', {
         'sssd': False,
